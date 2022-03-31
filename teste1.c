@@ -126,10 +126,13 @@ void inserirProduto(node test)
 
     produto Product;
 
+    fflush( stdout );
     printf("Insira o nome do produto:\n");
+    fflush( stdout );
     gets(designacao);
 
     printf("Insira o nome do fornecedor:\n");
+    fflush( stdout );
     gets(fornecedor);
 
     produto Produto;
