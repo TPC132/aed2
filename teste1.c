@@ -4,7 +4,7 @@
 
 struct produto
 {
-    double codigo;
+    int codigo;
     char designacao[50];
     char fornecedor[50];
     float precoUnitario;
@@ -25,7 +25,9 @@ typedef struct produto produto;
 void menuPrincipal(node test);
 void menuProduto(node test);
 void inserirProduto(node test);
-void verProdutos(node test);
+void listarProdutos(node test);
+void procurarProduto(node test);
+int obterCodigo(node test);
 
 node createNode()
 {
@@ -92,7 +94,7 @@ void menuProduto(node test)
 {
     int choice;
 
-    printf("1: Inserir Produto\n2: Ver produtos\n");
+    printf("1: Inserir Produto\n2: Listar produtos\n3: Consultar Produto\n");
 
     scanf("%d", &choice);
 
@@ -102,7 +104,10 @@ void menuProduto(node test)
         inserirProduto(test);
         break;
     case 2:
-        verProdutos(test);
+        listarProdutos(test);
+        break;
+    case 3:
+
         break;
     default:
         printf("Insira uma escolha válida");
@@ -111,13 +116,18 @@ void menuProduto(node test)
     }
 }
 
-void verProdutos(node test)
+void listarProdutos(node test)
 {
+    while (test != NULL)
+    {
+        printf("\n-------\n-> %s\n->%s\n-------\n", test->data.codigo, test->data.designacao);
+        test = test->next;
+    }
 }
 
 void inserirProduto(node test)
 {
-    double codigo;
+    int codigo;
     char designacao[50];
     char fornecedor[50];
     float precoUnitario;
@@ -126,28 +136,57 @@ void inserirProduto(node test)
 
     produto Product;
 
-    fflush( stdout );
+    fflush(stdout);
     printf("Insira o nome do produto:\n");
-    fflush( stdout );
-    gets(designacao);
+    fflush(stdout);
+    scanf("%s", designacao);
 
     printf("Insira o nome do fornecedor:\n");
-    fflush( stdout );
-    gets(fornecedor);
+    fflush(stdout);
+    scanf("%s", fornecedor);
+
+    printf("Insira o preco por unidade:\n");
+    fflush(stdout);
+    scanf("%f", &precoUnitario);
+
+    printf("Insira a quantidade minima:\n");
+    fflush(stdout);
+    scanf("%d", &quantidadeMinima);
+
+    printf("Insira a quantidade em stock:\n");
+    fflush(stdout);
+    scanf("%d", &quantidadeStock);
 
     produto Produto;
 
     strcpy(Produto.designacao, designacao);
     strcpy(Produto.fornecedor, fornecedor);
+    Produto.precoUnitario = precoUnitario;
+    Produto.quantidadeMinima = quantidadeMinima;
+    Produto.quantidadeStock = quantidadeStock;
+    //Produto.codigo = obterCodigo(test);
 
+    menuPrincipal(addNode(test, Produto));
+}
 
-    addNode(test, Product);
+int obterCodigo(node test)
+{
+    int code = 0;
 
-    node p;
-    p = test;
-    while (p != NULL)
+    if (test->next == NULL)
     {
-        printf("%s ", p->data.designacao);
-        p = p->next;
+        return 1;
+    }
+    else
+    {
+        while (test != NULL)
+        {
+            if (test->data.codigo > code)
+            {
+                code = test->data.codigo;
+            }
+            test = test->next;
+        }
+        return code;
     }
 }
