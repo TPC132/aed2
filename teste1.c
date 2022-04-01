@@ -68,7 +68,14 @@ void menuPrincipal(node test)
 
     int choice;
 
-    printf("1: Gerir Produtos\n2: Registar Movimento\n3: Consultar\n");
+    printf("*========================*\n");
+    printf("| 1 - Gerir Produtos     |\n");
+    printf("| 2 - Registar Movimento |\n");
+    printf("| 3 - Consultar          |\n");
+    printf("*========================*\n");
+    fflush(stdin);
+
+    //printf("1: Gerir Produtos\n2: Registar Movimento\n3: Consultar\n");
 
     scanf("%d", &choice);
 
@@ -164,7 +171,7 @@ void inserirProduto(node test)
     Produto.precoUnitario = precoUnitario;
     Produto.quantidadeMinima = quantidadeMinima;
     Produto.quantidadeStock = quantidadeStock;
-    //Produto.codigo = obterCodigo(test);
+    // Produto.codigo = obterCodigo(test);
 
     menuPrincipal(addNode(test, Produto));
 }
