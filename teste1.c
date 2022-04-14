@@ -42,6 +42,8 @@ node addNode(node head, produto value)
     node temp, p;        // declare two nodes temp and p
     temp = createNode(); // createNode will return a new node with data = value and next pointing to NULL.
     temp->data = value;  // add element's value to data part of node
+    temp->next = NULL;
+
     if (head == NULL)
     {
         head = temp; // when linked list is empty
@@ -59,8 +61,9 @@ node addNode(node head, produto value)
 }
 
 void main()
-{
-    menuPrincipal(createNode());
+{   
+    node startNode = NULL;
+    menuPrincipal(startNode);
 }
 
 void menuPrincipal(node test)
@@ -68,11 +71,13 @@ void menuPrincipal(node test)
 
     int choice;
 
+    printf("\n");
     printf("*========================*\n");
     printf("| 1 - Gerir Produtos     |\n");
     printf("| 2 - Registar Movimento |\n");
     printf("| 3 - Consultar          |\n");
     printf("*========================*\n");
+    printf("\n-> ");
     fflush(stdin);
 
     //printf("1: Gerir Produtos\n2: Registar Movimento\n3: Consultar\n");
@@ -85,7 +90,13 @@ void menuPrincipal(node test)
         menuProduto(test);
         break;
     case 2:
-
+        if (test != NULL)
+        {
+            printf("Something");
+        }else if (test == NULL)
+        {
+            printf("Bulldog");
+        }
         break;
     case 3:
 
@@ -101,7 +112,14 @@ void menuProduto(node test)
 {
     int choice;
 
-    printf("1: Inserir Produto\n2: Listar produtos\n3: Consultar Produto\n");
+    printf("\n");
+    printf("*========================*\n");
+    printf("| 1 - Inserir Produto    |\n");
+    printf("| 2 - Listar produtos    |\n");
+    printf("| 3 - Consultar Produto  |\n");
+    printf("*========================*\n");
+    fflush(stdin);
+    printf("\n-> ");
 
     scanf("%d", &choice);
 
@@ -125,11 +143,14 @@ void menuProduto(node test)
 
 void listarProdutos(node test)
 {
+    int counter = 0;
     while (test != NULL)
     {
-        printf("\n-------\n-> %s\n->%s\n-------\n", test->data.codigo, test->data.designacao);
+        ++ counter;
+        printf("\n-------\n-> %s\n-> %d\n-------\n", test->data.designacao, test->data.codigo);
         test = test->next;
     }
+    printf("\n%d", counter);
 }
 
 void inserirProduto(node test)
@@ -171,16 +192,17 @@ void inserirProduto(node test)
     Produto.precoUnitario = precoUnitario;
     Produto.quantidadeMinima = quantidadeMinima;
     Produto.quantidadeStock = quantidadeStock;
-    // Produto.codigo = obterCodigo(test);
+    Produto.codigo = obterCodigo(test);
 
-    menuPrincipal(addNode(test, Produto));
+    node link = addNode(test, Produto);
+    menuPrincipal(link);
 }
 
 int obterCodigo(node test)
 {
     int code = 0;
 
-    if (test->next == NULL)
+    if (test == NULL)
     {
         return 1;
     }
@@ -194,6 +216,6 @@ int obterCodigo(node test)
             }
             test = test->next;
         }
-        return code;
+        return code + 1;
     }
 }
