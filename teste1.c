@@ -132,7 +132,7 @@ void menuProduto(node test)
         listarProdutos(test);
         break;
     case 3:
-
+        procurarProduto(test);
         break;
     default:
         printf("Insira uma escolha válida");
@@ -196,6 +196,23 @@ void inserirProduto(node test)
 
     node link = addNode(test, Produto);
     menuPrincipal(link);
+}
+
+void procurarProduto(node test) {
+    int counter = 0;
+    char search[100];
+    printf("Introduza a designacao do produto \n");
+    scanf("%s", search);
+
+    while (test != NULL)
+    {
+        ++ counter;
+        if(strcmp(test->data.designacao, search)) {
+            printf("\n-------\n-> %s\n-> %d\n-------\n", test->data.designacao, test->data.codigo);    
+        }
+        test = test->next;
+    }
+    printf("\n%d", counter);
 }
 
 int obterCodigo(node test)
