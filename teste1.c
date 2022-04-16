@@ -26,8 +26,12 @@ void menuPrincipal(node test);
 void menuProduto(node test);
 void inserirProduto(node test);
 void listarProdutos(node test);
-void procurarProduto(node test);
+void procurarProdutoDesignacao(node test);
 int obterCodigo(node test);
+void voltar(node test);
+void editarProduto(node test);
+void menuEditarProduto(node test, node selected);
+void menuListarProdutos(node test);
 
 node createNode()
 {
@@ -61,7 +65,7 @@ node addNode(node head, produto value)
 }
 
 void main()
-{   
+{
     node startNode = NULL;
     menuPrincipal(startNode);
 }
@@ -80,8 +84,6 @@ void menuPrincipal(node test)
     printf("\n-> ");
     fflush(stdin);
 
-    //printf("1: Gerir Produtos\n2: Registar Movimento\n3: Consultar\n");
-
     scanf("%d", &choice);
 
     switch (choice)
@@ -93,7 +95,8 @@ void menuPrincipal(node test)
         if (test != NULL)
         {
             printf("Something");
-        }else if (test == NULL)
+        }
+        else if (test == NULL)
         {
             printf("Bulldog");
         }
@@ -115,8 +118,10 @@ void menuProduto(node test)
     printf("\n");
     printf("*========================*\n");
     printf("| 1 - Inserir Produto    |\n");
-    printf("| 2 - Listar produtos    |\n");
+    printf("| 2 - Editar Produto     |\n");
     printf("| 3 - Consultar Produto  |\n");
+    printf("| 4 - Remover Produto    |\n");
+    printf("| 5 - Listar Produtos    |\n");
     printf("*========================*\n");
     fflush(stdin);
     printf("\n-> ");
@@ -129,10 +134,16 @@ void menuProduto(node test)
         inserirProduto(test);
         break;
     case 2:
-        listarProdutos(test);
+        editarProduto(test);
         break;
     case 3:
-        procurarProduto(test);
+        procurarProdutoDesignacao(test);
+        break;
+    case 4:
+
+        break;
+    case 5:
+        menuListarProdutos(test);
         break;
     default:
         printf("Insira uma escolha válida");
@@ -144,13 +155,42 @@ void menuProduto(node test)
 void listarProdutos(node test)
 {
     int counter = 0;
-    while (test != NULL)
+    node link = test;
+    while (link != NULL)
     {
-        ++ counter;
-        printf("\n-------\n-> %s\n-> %d\n-------\n", test->data.designacao, test->data.codigo);
-        test = test->next;
+        ++counter;
+        printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+        link = link->next;
     }
     printf("\n%d", counter);
+    menuPrincipal(test);
+}
+
+void listarProdutosPorFornecedor(node test)
+{
+    int counter = 0;
+    char nome[100];
+    node link = test;
+
+    printf("\n");
+    printf("Insira o nome do fornecedor:");
+    printf("\n");
+    printf("\n");
+    printf("-> ");
+    fflush(stdout);
+    scanf("%s", nome);
+
+    while (link != NULL)
+    {
+        if (!strcmp(link->data.fornecedor, nome))
+        {
+            ++counter;
+            printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+        }
+        link = link->next;
+    }
+    printf("\n%d", counter);
+    menuPrincipal(test);
 }
 
 void inserirProduto(node test)
@@ -198,30 +238,58 @@ void inserirProduto(node test)
     menuPrincipal(link);
 }
 
-node procurarNode(node test, char des[100]) {
+node procurarNode(node test, char des[100])
+{
     int counter = 0;
     char oremos[100];
     char senhor[100];
 
-    while (test != NULL)
-    {
-        ++ counter;
+    node list = test;
 
-        if(!strcmp(test->data.designacao, des)) {
-            printf("\n-------\ndesignacao-> %s\ncodigo-> %d\n-------\n", test->data.designacao, test->data.codigo);    
-            return test;
+    while (list != NULL)
+    {
+        ++counter;
+
+        if (!strcmp(list->data.designacao, des))
+        {
+            return list;
         }
-        test = test->next;
-    }   
-    printf("\n%d\n", counter);
+        list = list->next;
+    }
     return NULL;
 }
 
-void procurarProduto(node test) {
+void procurarProdutoDesignacao(node test)
+{
+
+    node link;
     char search[100];
     printf("Introduza a designacao do produto \n");
     scanf("%s", search);
-    procurarNode(test, search);
+    link = procurarNode(test, search);
+
+    if (link == NULL)
+    {
+        printf("Nao foram encontrados produtos com a designacao %s", search);
+        voltar(test);
+    }
+    else
+    {
+        printf("\n");
+        printf("Produto: ");
+        printf("%s\n", link->data.designacao);
+        printf("Codigo: ");
+        printf("%d\n", link->data.codigo);
+        printf("Fornecedor: ");
+        printf("%s\n", link->data.fornecedor);
+        printf("Preco por Unidade: ");
+        printf("%f\n", link->data.precoUnitario);
+        printf("Quantidade Minima: ");
+        printf("%d\n", link->data.quantidadeMinima);
+        printf("Quantidade em Stock: ");
+        printf("%d\n", link->data.quantidadeStock);
+        voltar(test);
+    }
 }
 
 int obterCodigo(node test)
@@ -243,5 +311,154 @@ int obterCodigo(node test)
             test = test->next;
         }
         return code + 1;
+    }
+}
+
+void voltar(node test){
+    int selection;
+    printf("\n");
+    printf("\nSelecione 1 para voltar para o menu principal\n");
+    printf("\n");
+    printf("-> ");
+    scanf("%d", &selection);
+
+    if (selection == 1)
+    {
+        menuPrincipal(test);
+    }
+}
+
+void editarProduto(node test){
+
+    char nome[100];
+
+    printf("\nInsira o nome do produto que pretende editar:\n");
+    printf("\n");
+    scanf("%s", nome);
+    printf("\n");
+    menuEditarProduto(test, procurarNode(test, nome));
+
+}
+
+void menuEditarProduto(node test, node selected)
+{
+
+    int choice;
+    char nome[100];
+    int quantidade;
+    float preco;
+
+    printf("\n");
+    printf("*=================================*\n");
+    printf("| 1 - Editar Designacao           |\n");
+    printf("| 2 - Editar Fornecedor           |\n");
+    printf("| 3 - Editar Preco por unidade    |\n");
+    printf("| 4 - Editar  Quantidade Minima   |\n");
+    printf("| 5 - Editar Quantidade em Stock  |\n");
+    printf("*=================================*\n");
+    fflush(stdin);
+    printf("\n-> ");
+
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        printf("\n");
+        printf("insira a nova designacao:");
+        printf("\n");
+        printf("-> ");
+        scanf("%s", nome);
+        strcpy(selected->data.designacao, nome);
+        printf("\n");
+        printf("Alteracoes efetuadas com sucesso!");
+        printf("\n");
+        menuProduto(test);
+        break;
+    case 2:
+        printf("\n");
+        printf("insira o novo fornecedor:");
+        printf("\n");
+        printf("-> ");
+        scanf("%s", nome);
+        strcpy(selected->data.fornecedor, nome);
+        printf("\n");
+        printf("Alteracoes efetuadas com sucesso!");
+        printf("\n");
+        menuProduto(test);
+        break;
+    case 3:
+        printf("\n");
+        printf("insira o novo preco por unidade:");
+        printf("\n");
+        printf("-> ");
+        scanf("%f", &preco);
+        selected->data.precoUnitario = preco;
+        printf("\n");
+        printf("Alteracoes efetuadas com sucesso!");
+        printf("\n");
+        menuProduto(test);
+        break;
+    case 4:
+        printf("\n");
+        printf("insira a nova quantidade minima:");
+        printf("\n");
+        printf("-> ");
+        scanf("%d", &quantidade);
+        selected->data.quantidadeMinima = quantidade;
+        printf("\n");
+        printf("Alteracoes efetuadas com sucesso!");
+        printf("\n");
+        menuProduto(test);
+        break;
+    case 5:
+        printf("\n");
+        printf("insira a nova quantidade em stock:");
+        printf("\n");
+        printf("-> ");
+        scanf("%d", &quantidade);
+        selected->data.quantidadeStock = quantidade;
+        printf("\n");
+        printf("Alteracoes efetuadas com sucesso!");
+        printf("\n");
+        menuProduto(test);
+        break;
+    default:
+        printf("Insira uma escolha válida");
+        menuPrincipal(test);
+        break;
+    }
+}
+
+void menuListarProdutos(node test)
+{
+    int choice;
+
+    printf("\n");
+    printf("*================================================================================*\n");
+    printf("| 1 - Listar Todos os Produtos                                                   |\n");
+    printf("| 2 - Listar produtos por Fornecedor                                             |\n");
+    printf("| 3 - Listar produtos com uma quantidade em stock inferior a quantidade minima   |\n");
+    printf("*================================================================================*\n");
+    printf("\n-> ");
+    fflush(stdin);
+
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        listarProdutos(test);
+        break;
+    case 2:
+        listarProdutosPorFornecedor(test);
+        break;
+    case 3:
+
+        break;
+    default:
+        printf("Insira uma escolha válida");
+        menuPrincipal(test);
+        break;
     }
 }
