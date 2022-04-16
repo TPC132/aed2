@@ -198,21 +198,30 @@ void inserirProduto(node test)
     menuPrincipal(link);
 }
 
-void procurarProduto(node test) {
+node procurarNode(node test, char des[100]) {
     int counter = 0;
-    char search[100];
-    printf("Introduza a designacao do produto \n");
-    scanf("%s", search);
+    char oremos[100];
+    char senhor[100];
 
     while (test != NULL)
     {
         ++ counter;
-        if(strcmp(test->data.designacao, search)) {
-            printf("\n-------\n-> %s\n-> %d\n-------\n", test->data.designacao, test->data.codigo);    
+
+        if(!strcmp(test->data.designacao, des)) {
+            printf("\n-------\ndesignacao-> %s\ncodigo-> %d\n-------\n", test->data.designacao, test->data.codigo);    
+            return test;
         }
         test = test->next;
-    }
-    printf("\n%d", counter);
+    }   
+    printf("\n%d\n", counter);
+    return NULL;
+}
+
+void procurarProduto(node test) {
+    char search[100];
+    printf("Introduza a designacao do produto \n");
+    scanf("%s", search);
+    procurarNode(test, search);
 }
 
 int obterCodigo(node test)
