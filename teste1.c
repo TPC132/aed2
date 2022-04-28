@@ -12,33 +12,79 @@ struct produto
     int quantidadeStock;
 };
 
-// Creating a node
-struct Node
+struct movimento
 {
-    struct produto data;
-    struct Node *next;
+    int teste;
 };
 
-typedef struct Node *node; // Define node as pointer of data type struct LinkedList
+// Creating a node
+struct NodeProdutos
+{
+    struct produto data;
+    struct NodeProdutos *next;
+};
+
+struct NodeMovimentos
+{
+    struct movimento data;
+    struct NodeMovimentos *next;
+};
+
+
+typedef struct NodeProdutos *node; // Define node as pointer of data type struct LinkedList
 typedef struct produto produto;
 
-void menuPrincipal(node test);
-void menuProduto(node test);
-void inserirProduto(node test);
-void listarProdutos(node test);
-void procurarProdutoDesignacao(node test);
-int obterCodigo(node test);
-void voltar(node test);
-void editarProduto(node test);
-void menuEditarProduto(node test, node selected);
-void menuListarProdutos(node test);
+typedef struct NodeMovimentos *nodeMovimentos; // Define node as pointer of data type struct LinkedList
+typedef struct movimento movimento;
+
+void menuPrincipal(node test, nodeMovimentos movimentos);
+void menuProduto(node test, nodeMovimentos movimentos);
+void inserirProduto(node test, nodeMovimentos movimentos);
+void listarProdutos(node test, nodeMovimentos movimentos);
+void procurarProdutoDesignacao(node test, nodeMovimentos movimentos);
+int obterCodigo(node test, nodeMovimentos movimentos);
+void voltar(node test, nodeMovimentos movimentos);
+void editarProduto(node test, nodeMovimentos movimentos);
+void menuEditarProduto(node test, node selected, nodeMovimentos movimentos);
+void menuListarProdutos(node test, nodeMovimentos movimentos);
 
 node createNode()
 {
     node temp;                                // declare a node
-    temp = (node)malloc(sizeof(struct Node)); // allocate memory using malloc()
+    temp = (node)malloc(sizeof(struct NodeProdutos)); // allocate memory using malloc()
     temp->next = NULL;                        // make next point to NULL
     return temp;                              // return the new node
+}
+
+nodeMovimentos createNodeMovimentos()
+{
+    nodeMovimentos temp;                                // declare a node
+    temp = (nodeMovimentos)malloc(sizeof(struct NodeMovimentos)); // allocate memory using malloc()
+    temp->next = NULL;                        // make next point to NULL
+    return temp;                              // return the new node
+}
+
+nodeMovimentos addMovimento(nodeMovimentos head, movimento value)
+{
+    nodeMovimentos temp, p;        // declare two nodes temp and p
+    temp = createNodeMovimentos(); // createNode will return a new node with data = value and next pointing to NULL.
+    temp->data = value;  // add element's value to data part of node
+    temp->next = NULL;
+
+    if (head == NULL)
+    {
+        head = temp; // when linked list is empty
+    }
+    else
+    {
+        p = head; // assign head to p
+        while (p->next != NULL)
+        {
+            p = p->next; // traverse the list until p is the last node.The last node always points to NULL.
+        }
+        p->next = temp; // Point the previous last node to the new node created.
+    }
+    return head;
 }
 
 node addNode(node head, produto value)
@@ -66,11 +112,12 @@ node addNode(node head, produto value)
 
 void main()
 {
-    node startNode = NULL;
-    menuPrincipal(startNode);
+    node startNodeProdutos = NULL;
+    nodeMovimentos startNodeMovimentos = NULL;
+    menuPrincipal(startNodeProdutos, startNodeMovimentos);
 }
 
-void menuPrincipal(node test)
+void menuPrincipal(node test, nodeMovimentos movimentos)
 {
 
     int choice;
@@ -89,7 +136,7 @@ void menuPrincipal(node test)
     switch (choice)
     {
     case 1:
-        menuProduto(test);
+        menuProduto(test, movimentos);
         break;
     case 2:
         if (test != NULL)
@@ -106,12 +153,12 @@ void menuPrincipal(node test)
         break;
     default:
         printf("Insira uma escolha válida");
-        menuPrincipal(test);
+        menuPrincipal(test, movimentos);
         break;
     }
 }
 
-void menuProduto(node test)
+void menuProduto(node test, nodeMovimentos movimentos)
 {
     int choice;
 
@@ -131,28 +178,28 @@ void menuProduto(node test)
     switch (choice)
     {
     case 1:
-        inserirProduto(test);
+        inserirProduto(test, movimentos);
         break;
     case 2:
-        editarProduto(test);
+        editarProduto(test, movimentos);
         break;
     case 3:
-        procurarProdutoDesignacao(test);
+        procurarProdutoDesignacao(test, movimentos);
         break;
     case 4:
 
         break;
     case 5:
-        menuListarProdutos(test);
+        menuListarProdutos(test, movimentos);
         break;
     default:
         printf("Insira uma escolha válida");
-        menuPrincipal(test);
+        menuPrincipal(test, movimentos);
         break;
     }
 }
 
-void listarProdutos(node test)
+void listarProdutos(node test, nodeMovimentos movimentos)
 {
     int counter = 0;
     node link = test;
@@ -163,10 +210,10 @@ void listarProdutos(node test)
         link = link->next;
     }
     printf("\n%d", counter);
-    menuPrincipal(test);
+    menuPrincipal(test, movimentos);
 }
 
-void listarProdutosPorFornecedor(node test)
+void listarProdutosPorFornecedor(node test, nodeMovimentos movimentos)
 {
     int counter = 0;
     char nome[100];
@@ -190,10 +237,10 @@ void listarProdutosPorFornecedor(node test)
         link = link->next;
     }
     printf("\n%d", counter);
-    menuPrincipal(test);
+    menuPrincipal(test, movimentos);
 }
 
-void inserirProduto(node test)
+void inserirProduto(node test, nodeMovimentos movimentos)
 {
     int codigo;
     char designacao[50];
@@ -215,7 +262,7 @@ void inserirProduto(node test)
 
     printf("Insira o preco por unidade:\n");
     fflush(stdout);
-    scanf("%f", &precoUnitario);
+    scanf("%f", &precoUnitario); 
 
     printf("Insira a quantidade minima:\n");
     fflush(stdout);
@@ -232,10 +279,10 @@ void inserirProduto(node test)
     Produto.precoUnitario = precoUnitario;
     Produto.quantidadeMinima = quantidadeMinima;
     Produto.quantidadeStock = quantidadeStock;
-    Produto.codigo = obterCodigo(test);
+    Produto.codigo = obterCodigo(test, movimentos);
 
     node link = addNode(test, Produto);
-    menuPrincipal(link);
+    menuPrincipal(link, movimentos);
 }
 
 node procurarNode(node test, char des[100])
@@ -259,7 +306,7 @@ node procurarNode(node test, char des[100])
     return NULL;
 }
 
-void procurarProdutoDesignacao(node test)
+void procurarProdutoDesignacao(node test, nodeMovimentos movimentos)
 {
 
     node link;
@@ -271,7 +318,7 @@ void procurarProdutoDesignacao(node test)
     if (link == NULL)
     {
         printf("Nao foram encontrados produtos com a designacao %s", search);
-        voltar(test);
+        voltar(test, movimentos);
     }
     else
     {
@@ -288,11 +335,11 @@ void procurarProdutoDesignacao(node test)
         printf("%d\n", link->data.quantidadeMinima);
         printf("Quantidade em Stock: ");
         printf("%d\n", link->data.quantidadeStock);
-        voltar(test);
+        voltar(test, movimentos);
     }
 }
 
-int obterCodigo(node test)
+int obterCodigo(node test, nodeMovimentos movimentos)
 {
     int code = 0;
 
@@ -314,7 +361,7 @@ int obterCodigo(node test)
     }
 }
 
-void voltar(node test){
+void voltar(node test, nodeMovimentos movimentos){
     int selection;
     printf("\n");
     printf("\nSelecione 1 para voltar para o menu principal\n");
@@ -324,11 +371,11 @@ void voltar(node test){
 
     if (selection == 1)
     {
-        menuPrincipal(test);
+        menuPrincipal(test, movimentos);
     }
 }
 
-void editarProduto(node test){
+void editarProduto(node test, nodeMovimentos movimentos){
 
     char nome[100];
 
@@ -336,11 +383,11 @@ void editarProduto(node test){
     printf("\n");
     scanf("%s", nome);
     printf("\n");
-    menuEditarProduto(test, procurarNode(test, nome));
+    menuEditarProduto(test, procurarNode(test, nome), movimentos);
 
 }
 
-void menuEditarProduto(node test, node selected)
+void menuEditarProduto(node test, node selected, nodeMovimentos movimentos)
 {
 
     int choice;
@@ -373,7 +420,7 @@ void menuEditarProduto(node test, node selected)
         printf("\n");
         printf("Alteracoes efetuadas com sucesso!");
         printf("\n");
-        menuProduto(test);
+        menuProduto(test, movimentos);
         break;
     case 2:
         printf("\n");
@@ -385,7 +432,7 @@ void menuEditarProduto(node test, node selected)
         printf("\n");
         printf("Alteracoes efetuadas com sucesso!");
         printf("\n");
-        menuProduto(test);
+        menuProduto(test, movimentos);
         break;
     case 3:
         printf("\n");
@@ -397,7 +444,7 @@ void menuEditarProduto(node test, node selected)
         printf("\n");
         printf("Alteracoes efetuadas com sucesso!");
         printf("\n");
-        menuProduto(test);
+        menuProduto(test, movimentos);
         break;
     case 4:
         printf("\n");
@@ -409,7 +456,7 @@ void menuEditarProduto(node test, node selected)
         printf("\n");
         printf("Alteracoes efetuadas com sucesso!");
         printf("\n");
-        menuProduto(test);
+        menuProduto(test, movimentos);
         break;
     case 5:
         printf("\n");
@@ -421,16 +468,16 @@ void menuEditarProduto(node test, node selected)
         printf("\n");
         printf("Alteracoes efetuadas com sucesso!");
         printf("\n");
-        menuProduto(test);
+        menuProduto(test, movimentos);
         break;
     default:
         printf("Insira uma escolha válida");
-        menuPrincipal(test);
+        menuPrincipal(test, movimentos);
         break;
     }
 }
 
-void menuListarProdutos(node test)
+void menuListarProdutos(node test, nodeMovimentos movimentos)
 {
     int choice;
 
@@ -448,17 +495,17 @@ void menuListarProdutos(node test)
     switch (choice)
     {
     case 1:
-        listarProdutos(test);
+        listarProdutos(test, movimentos);
         break;
     case 2:
-        listarProdutosPorFornecedor(test);
+        listarProdutosPorFornecedor(test, movimentos);
         break;
     case 3:
 
         break;
     default:
         printf("Insira uma escolha válida");
-        menuPrincipal(test);
+        menuPrincipal(test, movimentos);
         break;
     }
 }
