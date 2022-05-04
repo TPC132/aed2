@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <stdbool.h>
 
 struct produto
 {
@@ -14,7 +16,11 @@ struct produto
 
 struct movimento
 {
-    int teste;
+    char produto[50];
+    char* date;
+    bool entrada;
+    int quantidade;
+
 };
 
 // Creating a node
@@ -47,6 +53,8 @@ void voltar(node test, nodeMovimentos movimentos);
 void editarProduto(node test, nodeMovimentos movimentos);
 void menuEditarProduto(node test, node selected, nodeMovimentos movimentos);
 void menuListarProdutos(node test, nodeMovimentos movimentos);
+void registarMovimento(node test, nodeMovimentos movimentos);
+void menuMovimentos(node test, nodeMovimentos movimentos);
 
 node createNode()
 {
@@ -125,8 +133,7 @@ void menuPrincipal(node test, nodeMovimentos movimentos)
     printf("\n");
     printf("*========================*\n");
     printf("| 1 - Gerir Produtos     |\n");
-    printf("| 2 - Registar Movimento |\n");
-    printf("| 3 - Consultar          |\n");
+    printf("| 2 - Gerir Movimentos   |\n");
     printf("*========================*\n");
     printf("\n-> ");
     fflush(stdin);
@@ -141,15 +148,12 @@ void menuPrincipal(node test, nodeMovimentos movimentos)
     case 2:
         if (test != NULL)
         {
-            printf("Something");
+            registarMovimento(test, movimentos);
         }
         else if (test == NULL)
         {
             printf("Bulldog");
         }
-        break;
-    case 3:
-
         break;
     default:
         printf("Insira uma escolha válida");
@@ -248,8 +252,6 @@ void inserirProduto(node test, nodeMovimentos movimentos)
     float precoUnitario;
     int quantidadeMinima;
     int quantidadeStock;
-
-    produto Product;
 
     fflush(stdout);
     printf("Insira o nome do produto:\n");
@@ -502,6 +504,98 @@ void menuListarProdutos(node test, nodeMovimentos movimentos)
         break;
     case 3:
 
+        break;
+    default:
+        printf("Insira uma escolha válida");
+        menuPrincipal(test, movimentos);
+        break;
+    }
+}
+
+bool produtoExiste(node test, char produto[])
+{
+
+    node list = test;
+
+    while (list != NULL)
+    {
+        if (!strcmp(list->data.designacao, produto))
+        {
+            return true;
+        }
+        list = list->next;
+    }
+    return false;
+}
+void registarMovimento(node test, nodeMovimentos movimentos)
+{
+    int choice;
+    char* date;
+    bool entrada;
+    int quantidade;
+    char produto[50];
+
+    movimento mov;
+
+    fflush(stdout);
+    printf("Indique o tipo de movimento:\n\n");
+    printf("-> ");
+    fflush(stdout);
+    scanf("%s", produto);
+    fflush(stdout);
+
+    fflush(stdout);
+    printf("Indique o tipo de movimento:\n");
+    fflush(stdout);
+    printf("\nInsira 1 para Entrada ou 2 para Saida:\n");
+    fflush(stdout);
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        mov.entrada = true;
+        break;
+    case 2:
+        mov.entrada = false;
+        break;
+    default:
+        printf("\nInsira uma escolha válida");
+        menuPrincipal(test, movimentos);
+        break;
+    }
+
+    fflush(stdout);
+    printf("\nInsira a quantidade:\n");
+    fflush(stdout);
+    scanf("%d", &quantidade);
+
+    //node link = addNode(test, Produto);
+    //menuPrincipal(link, movimentos);
+}
+
+void menuMovimentos(node test, nodeMovimentos movimentos)
+{
+
+    int choice;
+
+    printf("\n");
+    printf("*==========================*\n");
+    printf("| 1 - Registar Movimento   |\n");
+    printf("| 2 - Consultar Movimentos |\n");
+    printf("*==========================*\n");
+    fflush(stdin);
+    printf("\n-> ");
+
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        registarMovimento(test, movimentos);
+        break;
+    case 2:
+        printf("yesterday");
         break;
     default:
         printf("Insira uma escolha válida");
