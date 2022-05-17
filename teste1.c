@@ -255,37 +255,37 @@ void inserirProduto(node test, nodeM movimentos)
     int quantidadeStock;
 
     printf("\n");
-    printf("*=====================================*");
+    printf("*=====================================*\n");
     fflush(stdout);
     printf("| Insira o nome do produto:           |\n");
     fflush(stdout);
+    printf("  > ");
     scanf("%s", designacao);
-    printf(" >");
-    printf("\n+-----------------------------------+\n");
+    printf("+-------------------------------------+\n");
 
     printf("| Insira o nome do fornecedor:        |\n");
     fflush(stdout);
+    printf("  > ");
     scanf("%s", fornecedor);
-    printf(" >");
-    printf("\n+-----------------------------------+\n");
+    printf("+-------------------------------------+\n");
 
     printf("| Insira o preco por unidade:         |\n");
     fflush(stdout);
+    printf("  > ");
     scanf("%f", &precoUnitario);
-    printf(" >");
-    printf("\n+-----------------------------------+\n"); 
+    printf("+-------------------------------------+\n"); 
 
-    printf("|Insira a quantidade minima:          |\n");
+    printf("| Insira a quantidade minima:          |\n");
     fflush(stdout);
+    printf("  > ");
     scanf("%d", &quantidadeMinima);
-    printf(" >");
-    printf("\n+-----------------------------------+\n"); 
+    printf("+-------------------------------------+\n"); 
 
-    printf("|Insira a quantidade em stock:        |\n");
+    printf("| Insira a quantidade em stock:        |\n");
     fflush(stdout);
+    printf("  > ");
     scanf("%d", &quantidadeStock);
-    printf(" >");
-    printf("\n+-----------------------------------+\n"); 
+    printf("+-------------------------------------+\n"); 
 
     produto Produto;
 
@@ -302,7 +302,6 @@ void inserirProduto(node test, nodeM movimentos)
 
 node procurarNode(node test, char des[100])
 {
-    int counter = 0;
     char oremos[100];
     char senhor[100];
 
@@ -310,7 +309,6 @@ node procurarNode(node test, char des[100])
 
     while (list != NULL)
     {
-        ++counter;
 
         if (!strcmp(list->data.designacao, des))
         {
@@ -342,7 +340,7 @@ void procurarProdutoDesignacao(node test, nodeM movimentos)
     else
     {
         printf("\n");
-        printf("#########################################################");
+        printf("#########################################################\n");
         printf("  Produto: ");
         printf("%s\n", link->data.designacao);
         printf(".........................................................");
