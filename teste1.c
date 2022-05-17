@@ -20,7 +20,6 @@ struct movimento
     int **data;
     bool entrada;
     int quantidade;
-
 };
 
 // Creating a node
@@ -35,7 +34,6 @@ struct NodeMovimentos
     struct movimento data;
     struct NodeMovimentos *next;
 };
-
 
 typedef struct NodeProdutos *node; // Define node as pointer of data type struct LinkedList
 typedef struct produto produto;
@@ -55,29 +53,32 @@ void menuEditarProduto(node test, node selected, nodeM movimentos);
 void menuListarProdutos(node test, nodeM movimentos);
 void registarMovimento(node test, nodeM movimentos);
 void menuMovimentos(node test, nodeM movimentos);
+node remover(node test, char designacao[]);
+void removerProduto(node test, nodeM movimentos);
 int verificarStock(node test, char produto[]);
+int existeProduto(node test, char produto[]);
 
 node createNode()
 {
-    node temp;                                // declare a node
+    node temp;                                        // declare a node
     temp = (node)malloc(sizeof(struct NodeProdutos)); // allocate memory using malloc()
-    temp->next = NULL;                        // make next point to NULL
-    return temp;                              // return the new node
+    temp->next = NULL;                                // make next point to NULL
+    return temp;                                      // return the new node
 }
 
 nodeM createNodeMovimentos()
 {
-    nodeM temp;                                // declare a node
+    nodeM temp;                                          // declare a node
     temp = (nodeM)malloc(sizeof(struct NodeMovimentos)); // allocate memory using malloc()
-    temp->next = NULL;                        // make next point to NULL
-    return temp;                              // return the new node
+    temp->next = NULL;                                   // make next point to NULL
+    return temp;                                         // return the new node
 }
 
 nodeM addMovimento(nodeM head, movimento value)
 {
-    nodeM temp, p;        // declare two nodes temp and p
+    nodeM temp, p;                 // declare two nodes temp and p
     temp = createNodeMovimentos(); // createNode will return a new node with data = value and next pointing to NULL.
-    temp->data = value;  // add element's value to data part of node
+    temp->data = value;            // add element's value to data part of node
     temp->next = NULL;
 
     if (head == NULL)
@@ -153,7 +154,9 @@ void menuPrincipal(node test, nodeM movimentos)
     case 3:
         break;
     default:
-        printf("Insira uma escolha válida");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!              Insira uma escolha valida!            !!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(test, movimentos);
         break;
     }
@@ -189,7 +192,7 @@ void menuProduto(node test, nodeM movimentos)
         procurarProdutoDesignacao(test, movimentos);
         break;
     case 4:
-
+        removerProduto(test, movimentos);
         break;
     case 5:
         menuListarProdutos(test, movimentos);
@@ -199,29 +202,93 @@ void menuProduto(node test, nodeM movimentos)
         break;
     default:
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        printf("!! Insira uma escolha valida!\n");
+        printf("!!              Insira uma escolha valida!            !!\n");
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(test, movimentos);
         break;
     }
 }
 
+void removerProduto(node test, nodeM movimentos)
+{
+    char nome[100];
+
+    printf("\nInsira o nome do produto que pretende remover:\n");
+    printf("\n");
+    scanf("%s", nome);
+    printf("\n");
+    test = remover(test, nome);
+    menuProduto(test, movimentos);
+}
+
+node remover(node test, char designacao[])
+{
+    node ant, aux;
+    ant = test;
+    aux = test;
+    int encontrou = 0;
+    while (encontrou == 0 && aux != NULL)
+    {
+        if (!strcmp(aux->data.designacao, designacao))
+        {
+            encontrou = 1;
+        }
+        else
+        {
+            ant = aux;
+            aux = aux->next;
+        }
+    }
+    if (encontrou)
+    {
+        if (ant == aux && aux == test)
+        {
+            test = NULL;
+            return test;
+        }
+        else
+        {
+            ant->next = aux->next;
+        }
+        free(aux);
+        aux = NULL;
+    }
+    else
+    {
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("-> Nao foram encontrados produtos com a designacao: %s\n", designacao);
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    }
+    return test;
+}
+
 void listarProdutos(node test, nodeM movimentos)
 {
     int counter = 0;
     node link = test;
-    while (link != NULL)
+    if (link == NULL)
     {
-        ++counter;
-        //printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
-        printf("*========================*\n");
-        printf("Codigo: %d             \n", link->data.codigo);
-        printf("Designacao: %s         \n", link->data.designacao);
-        printf("*========================*\n");
-        link = link->next;
+        printf("\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!                   Nao ha produtos!                 !!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        menuPrincipal(test, movimentos);
     }
-    printf("\n%d", counter);
-    menuPrincipal(test, movimentos);
+    else
+    {
+        while (link != NULL)
+        {
+            ++counter;
+            // printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+            printf("*========================*\n");
+            printf("Codigo: %d             \n", link->data.codigo);
+            printf("Designacao: %s         \n", link->data.designacao);
+            printf("*========================*\n");
+            link = link->next;
+        }
+        printf("\n%d", counter);
+        menuPrincipal(test, movimentos);
+    }
 }
 
 void listarProdutosPorFornecedor(node test, nodeM movimentos)
@@ -279,19 +346,19 @@ void inserirProduto(node test, nodeM movimentos)
     fflush(stdout);
     printf("  > ");
     scanf("%f", &precoUnitario);
-    printf("+-------------------------------------+\n"); 
+    printf("+-------------------------------------+\n");
 
-    printf("| Insira a quantidade minima:          |\n");
+    printf("| Insira a quantidade minima:         |\n");
     fflush(stdout);
     printf("  > ");
     scanf("%d", &quantidadeMinima);
-    printf("+-------------------------------------+\n"); 
+    printf("+-------------------------------------+\n");
 
-    printf("| Insira a quantidade em stock:        |\n");
+    printf("| Insira a quantidade em stock:       |\n");
     fflush(stdout);
     printf("  > ");
     scanf("%d", &quantidadeStock);
-    printf("+-------------------------------------+\n"); 
+    printf("+-------------------------------------+\n");
 
     produto Produto;
 
@@ -337,33 +404,33 @@ void procurarProdutoDesignacao(node test, nodeM movimentos)
     if (link == NULL)
     {
         printf("\n");
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        printf("!! Nao foram encontrados produtos com a designacao %s !!", search);
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf(" Nao foram encontrados produtos com a designacao %s \n", search);
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         printf("\n");
         voltar(test, movimentos);
     }
     else
     {
         printf("\n");
-        printf("#########################################################\n");
-        printf("  Produto: ");
+        printf("#########################################################\n\n");
+        printf("->  Produto: ");
         printf("%s\n", link->data.designacao);
-        printf(".........................................................");
-        printf("  Codigo: ");
+        printf("_________________________________________________________\n\n");
+        printf("->  Codigo: ");
         printf("%d\n", link->data.codigo);
-        printf(".........................................................");
-        printf("  Fornecedor: ");
+        printf("_________________________________________________________\n\n");
+        printf("->  Fornecedor: ");
         printf("%s\n", link->data.fornecedor);
-        printf(".........................................................");
-        printf("  Preco por Unidade: ");
+        printf("_________________________________________________________\n\n");
+        printf("->  Preco por Unidade: ");
         printf("%f\n", link->data.precoUnitario);
-        printf(".........................................................");
-        printf("  Quantidade Minima: ");
+        printf("_________________________________________________________\n\n");
+        printf("->  Quantidade Minima: ");
         printf("%d\n", link->data.quantidadeMinima);
-        printf(".........................................................");
-        printf("  Quantidade em Stock: ");
-        printf("%d\n", link->data.quantidadeStock);
+        printf("_________________________________________________________\n\n");
+        printf("->  Quantidade em Stock: ");
+        printf("%d\n\n", link->data.quantidadeStock);
         printf("#########################################################");
         voltar(test, movimentos);
     }
@@ -391,7 +458,8 @@ int obterCodigo(node test, nodeM movimentos)
     }
 }
 
-void voltar(node test, nodeM movimentos){
+void voltar(node test, nodeM movimentos)
+{
     int selection;
     printf("\n");
     printf("\nSelecione 1 para voltar para o menu principal\n");
@@ -405,7 +473,8 @@ void voltar(node test, nodeM movimentos){
     }
 }
 
-void editarProduto(node test, nodeM movimentos){
+void editarProduto(node test, nodeM movimentos)
+{
 
     char nome[100];
 
@@ -413,16 +482,18 @@ void editarProduto(node test, nodeM movimentos){
     printf("\n");
     scanf("%s", nome);
     printf("\n");
-    if(existeProduto(test, nome)){
+    if (existeProduto(test, nome))
+    {
         menuEditarProduto(test, procurarNode(test, nome), movimentos);
-    } else {
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        printf("!! Nao foram encontrados produtos com a designacao: %s", nome);
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        editarProduto(test, movimentos);
+    }
+    else
+    {
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("-> Nao foram encontrados produtos com a designacao: %s\n", nome);
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        menuProduto(test, movimentos);
     }
 }
-
 
 void menuEditarProduto(node test, node selected, nodeM movimentos)
 {
@@ -450,19 +521,21 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
     {
     case 1:
         printf("\n");
-        printf("insira a nova designacao:");
+        printf("Insira a nova designacao:");
         printf("\n");
         printf("-> ");
         scanf("%s", nome);
         strcpy(selected->data.designacao, nome);
         printf("\n");
-        printf("Alteracoes efetuadas com sucesso!");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$           Alteracoes efetuadas com sucesso!        $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
         printf("\n");
         menuProduto(test, movimentos);
         break;
     case 2:
         printf("\n");
-        printf("insira o novo fornecedor:");
+        printf("Insira o novo fornecedor:");
         printf("\n");
         printf("-> ");
         scanf("%s", nome);
@@ -513,7 +586,7 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
         break;
     default:
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        printf("!! Insira uma escolha valida!\n");
+        printf("!!              Insira uma escolha valida!            !!\n");
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(test, movimentos);
         break;
@@ -526,7 +599,7 @@ void listarProdutosPorQtdMinStock(node test, nodeM movimentos)
 
     while (link != NULL)
     {
-        if (link->data.quantidadeStock<link->data.quantidadeMinima)
+        if (link->data.quantidadeStock < link->data.quantidadeMinima)
         {
             printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
         }
@@ -567,20 +640,23 @@ void menuListarProdutos(node produtos, nodeM movimentos)
         break;
     default:
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        printf("!! Insira uma escolha valida!\n");
+        printf("!!              Insira uma escolha valida!            !!\n");
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(produtos, movimentos);
         break;
     }
 }
 
-int existeProduto(node test, char produto[]){
-    while (test!=NULL)
+int existeProduto(node test, char produto[])
+{
+    while (test != NULL)
     {
         if (!strcmp(test->data.designacao, produto))
         {
             return 1;
-        }else{
+        }
+        else
+        {
             test = test->next;
         }
     }
@@ -626,7 +702,6 @@ int adicionarStock(node test, char produto[], int num)
     {
         if (!strcmp(test->data.designacao, produto))
         {
-            printf("\nteste\n");
             test->data.quantidadeStock += num;
             return 1;
         }
@@ -651,32 +726,25 @@ int removerStock(node test, char produto[], int num)
     return -1;
 }
 
-int** obterData(){
-    
-    char datestr[50];
-    
-    int **data = (int **)malloc(2 * sizeof(int*));
-    for(int i = 0; i < 2; i++) data[i] = (int *)malloc(3 * sizeof(int));
-    
+int **obterData()
+{
+    int **data = (int **)malloc(2 * sizeof(int *));
+    for (int i = 0; i < 2; i++)
+        data[i] = (int *)malloc(3 * sizeof(int));
+
     time_t rawtime;
-    struct tm * timeinfo;
-    
+    struct tm *timeinfo;
+
     time(&rawtime);
     timeinfo = localtime(&rawtime);
-            
+
     data[0][0] = timeinfo->tm_mday;
     data[0][1] = timeinfo->tm_mon + 1;
     data[0][2] = timeinfo->tm_year + 1900;
     data[1][0] = timeinfo->tm_hour;
     data[1][1] = timeinfo->tm_min;
     data[1][2] = timeinfo->tm_sec;
-    
-        sprintf(datestr, "[%d %d %d %d:%d:%d]", timeinfo->tm_mday,
-            timeinfo->tm_mon + 1, timeinfo->tm_year + 1900,
-            timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
-            
-            printf("%s\n\n\n", datestr);
-    
+
     return data;
 }
 
@@ -694,14 +762,18 @@ void registarMovimento(node test, nodeM movimentos)
     movimento mov;
 
     fflush(stdout);
-    printf("Indique o produto que pretende movimentar:\n\n");
+    printf("\n");
+    printf("Indique o produto que pretende movimentar:\n");
     printf("-> ");
     fflush(stdout);
     scanf("%s", produto);
     fflush(stdout);
     if (!existeProduto(test, produto))
     {
-        printf("\nO produto que selecionou nao existe\n");
+        printf("\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!         O produto que selecionou não existe!       !!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuMovimentos(test, movimentos);
     }
     else
@@ -711,7 +783,7 @@ void registarMovimento(node test, nodeM movimentos)
 
         mov.data = obterData();
 
-        printf("Indique o tipo de movimento:\n\n");
+        printf("Indique o tipo de movimento:\n");
         fflush(stdout);
         printf("\nInsira 1 para Entrada ou 2 para Saida:\n");
         printf("-> ");
@@ -728,7 +800,7 @@ void registarMovimento(node test, nodeM movimentos)
             break;
         default:
             printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            printf("!! Insira uma escolha valida!\n");
+            printf("!!              Insira uma escolha valida!            !!\n");
             printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             menuPrincipal(test, movimentos);
             break;
@@ -745,20 +817,23 @@ void registarMovimento(node test, nodeM movimentos)
             stock = verificarStock(test, produto);
             qtdMinima = verificarQtdMinima(test, produto);
 
-            printf("\nHOU\n");
-
-            printf("\nStock: \n%d", stock);
-            printf("\nqtdMin: \n%d", qtdMinima);
-
             if (quantidade > stock)
             {
-                printf("\nNão existe stock suficiente para este movimento\nPor favor verifique a quantidade atual em stock\n");
+                printf("\n");
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                printf("!!  Nao existe stock suficiente para este movimento.  !!\n");
+                printf("!!  Por favor verifique a quantidade atual em stock.  !!\n");
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 menuMovimentos(test, movimentos);
             }
             else if ((stock - quantidade) < qtdMinima)
             {
-                printf("\nEste movimento ira reduzir o stock para valores abaixo do stock minimo\nTem a certeza que pretende continuar?\n");
-                printf("\nInsira 1 para Sim ou 2 para Nao:\n");
+                printf("\n");
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                printf("!!  Este movimento ira reduzir o stock para valores abaixo do stock minimo.  !!\n");
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                printf("\n");
+                printf("\nSe pretende continuar insira 1. Senao, insira 2:\n");
 
                 scanf("%d", &choice2);
 
@@ -768,6 +843,10 @@ void registarMovimento(node test, nodeM movimentos)
                 {
                     nodeM link = addMovimento(movimentos, mov);
                     removerStock(test, produto, quantidade);
+                    printf("\n");
+                    printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+                    printf("$$            Registo efetuado com sucesso!           $$\n");
+                    printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
                     menuMovimentos(test, link);
                     break;
                 }
@@ -775,8 +854,9 @@ void registarMovimento(node test, nodeM movimentos)
                     menuMovimentos(test, movimentos);
                     break;
                 default:
+                    printf("\n");
                     printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                    printf("!! Insira uma escolha valida!\n");
+                    printf("!!              Insira uma escolha valida!            !!\n");
                     printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                     menuMovimentos(test, movimentos);
                     break;
@@ -786,6 +866,10 @@ void registarMovimento(node test, nodeM movimentos)
             {
                 nodeM link = addMovimento(movimentos, mov);
                 removerStock(test, produto, quantidade);
+                printf("\n");
+                printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+                printf("$$            Registo efetuado com sucesso!           $$\n");
+                printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
                 menuMovimentos(test, link);
             }
         }
@@ -793,8 +877,11 @@ void registarMovimento(node test, nodeM movimentos)
         {
             nodeM link = addMovimento(movimentos, mov);
             adicionarStock(test, produto, quantidade);
-            menuMovimentos(test, link);  
-
+            printf("\n");
+            printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+            printf("$$            Registo efetuado com sucesso!           $$\n");
+            printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+            menuMovimentos(test, link);
         }
     }
 }
@@ -803,33 +890,50 @@ void consultarMovimentos(node test, nodeM movimentos)
 {
     int di, mi, yi, df, mf, yf;
     printf("\nDefina um periodo de tempo:\n");
-    printf("Inicio: \n");
+    printf("--- Inicio ---\n");
     printf("Dia : ");
     scanf("%d", &di);
     printf("Mes : ");
     scanf("%d", &mi);
     printf("Ano : ");
-    scanf("%d", &di);
-    printf("\nFim: \n");
+    scanf("%d", &yi);
+    printf("\n--- Fim ---\n");
     printf("Dia : ");
     scanf("%d", &df);
     printf("Mes : ");
     scanf("%d", &mf);
     printf("Ano : ");
-    scanf("%d", &df);
+    scanf("%d", &yf);
 
-    while (movimentos != NULL)
+    if (movimentos == NULL)
     {
-        int **data;
-        data = movimentos->data.data;
-        if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
-        {
-            printf("\n%s\n%d\n%d-%d-%d\n", movimentos->data.produto, movimentos->data.quantidade, movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
-            movimentos = movimentos->next;
-        }
+        printf("\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!          Nao foram registados movimentos!          !!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        voltar(test, movimentos);
     }
+    else
+    {
+        while (movimentos != NULL)
+        {
+            int **data;
+            data = movimentos->data.data;
+            if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
+            {
+                printf("\n");
+                printf("*========================*\n");
+                printf("Designacao: %s             \n", movimentos->data.produto);
+                printf("Quantidade: %d         \n", movimentos->data.quantidade);
+                printf("Data: %d-%d-%d         \n", movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
+                printf("*========================*\n");
+                //printf("\n%s\n%d\n%d-%d-%d\n", movimentos->data.produto, movimentos->data.quantidade, movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
+                movimentos = movimentos->next;
+            }
+        }
 
-    voltar(test, movimentos);
+        voltar(test, movimentos);
+    }
 }
 
 void menuMovimentos(node test, nodeM movimentos)
@@ -860,7 +964,9 @@ void menuMovimentos(node test, nodeM movimentos)
         menuPrincipal(test, movimentos);
         break;
     default:
-        printf("Insira uma escolha válida");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!              Insira uma escolha valida!            !!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(test, movimentos);
         break;
     }
