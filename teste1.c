@@ -198,7 +198,9 @@ void menuProduto(node test, nodeM movimentos)
         menuPrincipal(test, movimentos);
         break;
     default:
-        printf("Insira uma escolha válida");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!! Insira uma escolha valida!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(test, movimentos);
         break;
     }
@@ -211,7 +213,11 @@ void listarProdutos(node test, nodeM movimentos)
     while (link != NULL)
     {
         ++counter;
-        printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+        //printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+        printf("*========================*\n");
+        printf("| Codigo: %d|\n", link->data.codigo);
+        printf("| Designacao: %s|\n", link->data.designacao);
+        printf("*========================*\n");
         link = link->next;
     }
     printf("\n%d", counter);
@@ -454,9 +460,9 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
         printf("-> ");
         scanf("%s", nome);
         strcpy(selected->data.fornecedor, nome);
-        printf("\n");
-        printf("Alteracoes efetuadas com sucesso!");
-        printf("\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$           Alteracoes efetuadas com sucesso!        $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
         menuProduto(test, movimentos);
         break;
     case 3:
@@ -466,9 +472,9 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
         printf("-> ");
         scanf("%f", &preco);
         selected->data.precoUnitario = preco;
-        printf("\n");
-        printf("Alteracoes efetuadas com sucesso!");
-        printf("\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$           Alteracoes efetuadas com sucesso!        $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
         menuProduto(test, movimentos);
         break;
     case 4:
@@ -478,9 +484,9 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
         printf("-> ");
         scanf("%d", &quantidade);
         selected->data.quantidadeMinima = quantidade;
-        printf("\n");
-        printf("Alteracoes efetuadas com sucesso!");
-        printf("\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$           Alteracoes efetuadas com sucesso!        $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
         menuProduto(test, movimentos);
         break;
     case 5:
@@ -490,16 +496,18 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
         printf("-> ");
         scanf("%d", &quantidade);
         selected->data.quantidadeStock = quantidade;
-        printf("\n");
-        printf("Alteracoes efetuadas com sucesso!");
-        printf("\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$           Alteracoes efetuadas com sucesso!        $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
         menuProduto(test, movimentos);
         break;
     case 6:
         menuProduto(test, movimentos);
         break;
     default:
-        printf("Insira uma escolha válida");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!! Insira uma escolha valida!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(test, movimentos);
         break;
     }
@@ -551,7 +559,9 @@ void menuListarProdutos(node produtos, nodeM movimentos)
         menuProduto(produtos, movimentos);
         break;
     default:
-        printf("Insira uma escolha válida");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!! Insira uma escolha valida!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         menuPrincipal(produtos, movimentos);
         break;
     }
@@ -710,7 +720,9 @@ void registarMovimento(node test, nodeM movimentos)
             mov.entrada = false;
             break;
         default:
-            printf("\nInsira uma escolha válida");
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+            printf("!! Insira uma escolha valida!\n");
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             menuPrincipal(test, movimentos);
             break;
         }
@@ -756,7 +768,9 @@ void registarMovimento(node test, nodeM movimentos)
                     menuMovimentos(test, movimentos);
                     break;
                 default:
-                    printf("\nInsira uma escolha válida");
+                    printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                    printf("!! Insira uma escolha valida!\n");
+                    printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                     menuMovimentos(test, movimentos);
                     break;
                 }
