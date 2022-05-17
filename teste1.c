@@ -119,7 +119,7 @@ node addNode(node head, produto value)
     return head;
 }
 
-void main()
+int main()
 {
     node startNodeProdutos = NULL;
     nodeM startNodeMovimentos = NULL;
@@ -215,8 +215,8 @@ void listarProdutos(node test, nodeM movimentos)
         ++counter;
         //printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
         printf("*========================*\n");
-        printf("| Codigo: %d|\n", link->data.codigo);
-        printf("| Designacao: %s|\n", link->data.designacao);
+        printf("Codigo: %d             \n", link->data.codigo);
+        printf("Designacao: %s         \n", link->data.designacao);
         printf("*========================*\n");
         link = link->next;
     }
@@ -413,9 +413,16 @@ void editarProduto(node test, nodeM movimentos){
     printf("\n");
     scanf("%s", nome);
     printf("\n");
-    menuEditarProduto(test, procurarNode(test, nome), movimentos);
-
+    if(existeProduto(test, nome)){
+        menuEditarProduto(test, procurarNode(test, nome), movimentos);
+    } else {
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        printf("!! Nao foram encontrados produtos com a designacao: %s", nome);
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        editarProduto(test, movimentos);
+    }
 }
+
 
 void menuEditarProduto(node test, node selected, nodeM movimentos)
 {
