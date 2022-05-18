@@ -9,7 +9,7 @@
 
 void inserirProduto(node test, nodeM movimentos)
 {
-    int codigo;
+    //int codigo;
     char designacao[50];
     char fornecedor[50];
     float precoUnitario;
@@ -255,8 +255,8 @@ void listarProdutosPorQtdMinStock(node test, nodeM movimentos)
 
 node procurarNode(node test, char des[100])
 {
-    char oremos[100];
-    char senhor[100];
+    //char oremos[100];
+    //char senhor[100];
 
     node list = test;
 
@@ -304,5 +304,49 @@ node addNode(node head, produto value)
     return head;
 }
 
+int existeProduto(node test, char produto[])
+{
+    while (test != NULL)
+    {
+        if (!strcmp(test->data.designacao, produto))
+        {
+            return 1;
+        }
+        else
+        {
+            test = test->next;
+        }
+    }
+    return 0;
+}
 
+void listarProdutosPorFornecedor(node test, nodeM movimentos)
+{
+    int counter = 0;
+    char nome[100];
+    node link = test;
 
+    printf("\n");
+    printf("Insira o nome do fornecedor:");
+    printf("-> \n");
+    printf("\n");
+    printf("-> ");
+    fflush(stdout);
+    scanf("%s", nome);
+
+    while (link != NULL)
+    {
+        if (!strcmp(link->data.fornecedor, nome))
+        {
+            ++counter;
+            printf("*========================*\n");
+            printf("Codigo: %d             \n", link->data.codigo);
+            printf("Designacao: %s         \n", link->data.designacao);
+            printf("*========================*\n");
+            // printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+        }
+        link = link->next;
+    }
+    // printf("\n%d", counter);
+    menuPrincipal(test, movimentos);
+}

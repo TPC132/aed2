@@ -1,19 +1,7 @@
-// struct movimento
-// {
-//     char produto[50];
-//     int **data;
-//     bool entrada;
-//     int quantidade;
-// };
+#ifndef _movimentos_h
+#define _movimentos_h
 
-// struct NodeMovimentos
-// {
-//     struct movimento data;
-//     struct NodeMovimentos *next;
-// };
-
-// typedef struct NodeMovimentos *nodeM; // Define node as pointer of data type struct LinkedList
-// typedef struct movimento movimento;
+#include "dados.h"
 
 nodeM createNodeMovimentos();
 nodeM addMovimento(nodeM head, movimento value);
@@ -24,3 +12,5 @@ int verificarStock(node test, char produto[]);
 int verificarQtdMinima(node test, char produto[]);
 int adicionarStock(node test, char produto[], int num);
 int removerStock(node test, char produto[], int num);
+
+#endif

@@ -1,21 +1,7 @@
-// struct produto
-// {
-//     int codigo;
-//     char designacao[50];
-//     char fornecedor[50];
-//     float precoUnitario;
-//     int quantidadeMinima;
-//     int quantidadeStock;
-// };
+#ifndef _produtos_h
+#define _produtos_h
 
-// struct NodeProdutos
-// {
-//     struct produto data;
-//     struct NodeProdutos *next;
-// };
-
-// typedef struct NodeProdutos *node; // Define node as pointer of data type struct LinkedList
-// typedef struct produto produto;
+#include "dados.h"
 
 node createNode();
 node addNode(node head, produto value);
@@ -29,3 +15,6 @@ node remover(node test, char designacao[]);
 void removerProduto(node test, nodeM movimentos);
 void listarProdutosPorQtdMinStock(node test, nodeM movimentos);
 node procurarNode(node test, char des[100]);
+void listarProdutosPorFornecedor(node test, nodeM movimentos);
+
+#endif

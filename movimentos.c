@@ -10,13 +10,13 @@
 void registarMovimento(node test, nodeM movimentos)
 {
     int choice, stock, qtdMinima, choice2;
-    char *date;
-    bool entrada;
+    //char *date;
+    //bool entrada;
     int quantidade;
     char produto[50];
 
-    node aux;
-    aux = test;
+    //node aux;
+    //aux = test;
 
     movimento mov;
 
