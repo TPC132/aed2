@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
+#include "oremos.h"
 
 
 struct produto
@@ -121,7 +122,7 @@ node addNode(node head, produto value)
     return head;
 }
 
-void main()
+int main()
 {
     teste();
     node startNodeProdutos = NULL;
