@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdbool.h>
 
+
 struct produto
 {
     int codigo;
@@ -120,8 +121,9 @@ node addNode(node head, produto value)
     return head;
 }
 
-int main()
+void main()
 {
+    teste();
     node startNodeProdutos = NULL;
     nodeM startNodeMovimentos = NULL;
     menuPrincipal(startNodeProdutos, startNodeMovimentos);
@@ -214,7 +216,7 @@ void removerProduto(node test, nodeM movimentos)
     char nome[100];
 
     printf("\nInsira o nome do produto que pretende remover:\n");
-    printf("\n");
+    printf("-> \n");
     scanf("%s", nome);
     printf("\n");
     test = remover(test, nome);
@@ -286,7 +288,7 @@ void listarProdutos(node test, nodeM movimentos)
             printf("*========================*\n");
             link = link->next;
         }
-        printf("\n%d", counter);
+        //printf("\n%d", counter);
         menuPrincipal(test, movimentos);
     }
 }
@@ -299,7 +301,7 @@ void listarProdutosPorFornecedor(node test, nodeM movimentos)
 
     printf("\n");
     printf("Insira o nome do fornecedor:");
-    printf("\n");
+    printf("-> \n");
     printf("\n");
     printf("-> ");
     fflush(stdout);
@@ -310,11 +312,15 @@ void listarProdutosPorFornecedor(node test, nodeM movimentos)
         if (!strcmp(link->data.fornecedor, nome))
         {
             ++counter;
-            printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+            printf("*========================*\n");
+            printf("Codigo: %d             \n", link->data.codigo);
+            printf("Designacao: %s         \n", link->data.designacao);
+            printf("*========================*\n");            
+            //printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
         }
         link = link->next;
     }
-    printf("\n%d", counter);
+    //printf("\n%d", counter);
     menuPrincipal(test, movimentos);
 }
 
@@ -479,7 +485,7 @@ void editarProduto(node test, nodeM movimentos)
     char nome[100];
 
     printf("\nInsira o nome do produto que pretende editar:\n");
-    printf("\n");
+    printf("-> \n");
     scanf("%s", nome);
     printf("\n");
     if (existeProduto(test, nome))
@@ -508,7 +514,7 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
     printf("| 1 - Editar Designacao           |\n");
     printf("| 2 - Editar Fornecedor           |\n");
     printf("| 3 - Editar Preco por unidade    |\n");
-    printf("| 4 - Editar  Quantidade Minima   |\n");
+    printf("| 4 - Editar Quantidade Minima   |\n");
     printf("| 5 - Editar Quantidade em Stock  |\n");
     printf("| 6 - Voltar                      |\n");
     printf("*=================================*\n");
@@ -571,7 +577,7 @@ void menuEditarProduto(node test, node selected, nodeM movimentos)
         break;
     case 5:
         printf("\n");
-        printf("insira a nova quantidade em stock:");
+        printf("Insira a nova quantidade em stock:");
         printf("\n");
         printf("-> ");
         scanf("%d", &quantidade);
@@ -601,7 +607,11 @@ void listarProdutosPorQtdMinStock(node test, nodeM movimentos)
     {
         if (link->data.quantidadeStock < link->data.quantidadeMinima)
         {
-            printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+            printf("*========================*\n");
+            printf("Codigo: %d             \n", link->data.codigo);
+            printf("Designacao: %s         \n", link->data.designacao);
+            printf("*========================*\n");
+            //printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
         }
         link = link->next;
     }
@@ -808,6 +818,7 @@ void registarMovimento(node test, nodeM movimentos)
 
         fflush(stdout);
         printf("\nInsira a quantidade:\n");
+        printf("-> \n");
         fflush(stdout);
         scanf("%d", &quantidade);
         mov.quantidade = quantidade;
