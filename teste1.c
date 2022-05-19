@@ -6,6 +6,7 @@
 #include "menus.h"
 #include "produtos.h"
 #include "movimentos.h"
+#include "ficheiro.h"
 
 
 // struct produto
@@ -127,8 +128,10 @@
 
 int main()
 {   
+    fflush(stdin);
     node startNodeProdutos = NULL;
     nodeM startNodeMovimentos = NULL;
+    startNodeProdutos = carregarDadosProdutosFich(startNodeProdutos);
     menuPrincipal(startNodeProdutos, startNodeMovimentos);
 }
 

@@ -6,6 +6,7 @@
 #include "menus.h"
 #include "produtos.h"
 #include "movimentos.h"
+#include "ficheiro.h"
 
 
 
@@ -34,6 +35,8 @@ void menuPrincipal(node test, nodeM movimentos)
         menuMovimentos(test, movimentos);
         break;
     case 3:
+        guardarDadosProdutosFich(test);
+        exit(0);
         break;
     default:
         printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");

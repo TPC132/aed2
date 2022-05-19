@@ -10,13 +10,8 @@
 void registarMovimento(node test, nodeM movimentos)
 {
     int choice, stock, qtdMinima, choice2;
-    //char *date;
-    //bool entrada;
     int quantidade;
     char produto[50];
-
-    //node aux;
-    //aux = test;
 
     movimento mov;
 
@@ -183,12 +178,12 @@ void consultarMovimentos(node test, nodeM movimentos)
             if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
             {
                 printf("\n");
-                printf("*========================*\n");
+                printf("*=========================*\n");
                 printf("Designacao: %s             \n", movimentos->data.produto);
-                printf("Quantidade: %d         \n", movimentos->data.quantidade);
-                printf("Data: %d-%d-%d         \n", movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
-                printf("*========================*\n");
-                //printf("\n%s\n%d\n%d-%d-%d\n", movimentos->data.produto, movimentos->data.quantidade, movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
+                printf("Quantidade: %d             \n", movimentos->data.quantidade);
+                printf("Data: %d-%d-%d", movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
+                printf(" %d:%d:%d    \n", movimentos->data.data[1][0], movimentos->data.data[1][1], movimentos->data.data[1][2]);
+                printf("*=========================*\n");
                 movimentos = movimentos->next;
             }
         }
@@ -288,31 +283,31 @@ int removerStock(node test, char produto[], int num)
 
 nodeM createNodeMovimentos()
 {
-    nodeM temp;                                          // declare a node
-    temp = (nodeM)malloc(sizeof(struct NodeMovimentos)); // allocate memory using malloc()
-    temp->next = NULL;                                   // make next point to NULL
-    return temp;                                         // return the new node
+    nodeM temp;                                          
+    temp = (nodeM)malloc(sizeof(struct NodeMovimentos)); 
+    temp->next = NULL;                                   
+    return temp;                                     
 }
 
 nodeM addMovimento(nodeM head, movimento value)
 {
-    nodeM temp, p;                 // declare two nodes temp and p
-    temp = createNodeMovimentos(); // createNode will return a new node with data = value and next pointing to NULL.
-    temp->data = value;            // add element's value to data part of node
+    nodeM temp, p;                 
+    temp = createNodeMovimentos(); 
+    temp->data = value;           
     temp->next = NULL;
 
     if (head == NULL)
     {
-        head = temp; // when linked list is empty
+        head = temp; 
     }
     else
     {
-        p = head; // assign head to p
+        p = head;
         while (p->next != NULL)
         {
-            p = p->next; // traverse the list until p is the last node.The last node always points to NULL.
+            p = p->next; 
         }
-        p->next = temp; // Point the previous last node to the new node created.
+        p->next = temp; 
     }
     return head;
 }

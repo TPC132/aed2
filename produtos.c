@@ -9,7 +9,6 @@
 
 void inserirProduto(node test, nodeM movimentos)
 {
-    //int codigo;
     char designacao[50];
     char fornecedor[50];
     float precoUnitario;
@@ -59,6 +58,12 @@ void inserirProduto(node test, nodeM movimentos)
     Produto.codigo = obterCodigo(test, movimentos);
 
     node link = addNode(test, Produto);
+
+    printf("\n");
+    printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+    printf("$$            Produto inserido com sucesso!           $$\n");
+    printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+
     menuPrincipal(link, movimentos);
 }
 
@@ -79,14 +84,13 @@ void listarProdutos(node test, nodeM movimentos)
         while (link != NULL)
         {
             ++counter;
-            // printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
+            printf("\n");
             printf("*========================*\n");
             printf("Codigo: %d             \n", link->data.codigo);
             printf("Designacao: %s         \n", link->data.designacao);
             printf("*========================*\n");
             link = link->next;
         }
-        //printf("\n%d", counter);
         menuPrincipal(test, movimentos);
     }
 }
@@ -202,7 +206,11 @@ node remover(node test, char designacao[])
     {
         if (ant == aux && aux == test)
         {
-            test = NULL;
+            test = aux->next;
+            printf("\n");
+            printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+            printf("$$            Produto removido com sucesso!           $$\n");
+            printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
             return test;
         }
         else
@@ -211,14 +219,19 @@ node remover(node test, char designacao[])
         }
         free(aux);
         aux = NULL;
+        printf("\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$            Produto removido com sucesso!           $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        return test;
     }
     else
     {
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         printf("-> Nao foram encontrados produtos com a designacao: %s\n", designacao);
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        return test;
     }
-    return test;
 }
 
 void removerProduto(node test, nodeM movimentos)
@@ -226,7 +239,8 @@ void removerProduto(node test, nodeM movimentos)
     char nome[100];
 
     printf("\nInsira o nome do produto que pretende remover:\n");
-    printf("-> \n");
+    printf("\n");
+    printf("> ");
     scanf("%s", nome);
     printf("\n");
     test = remover(test, nome);
@@ -246,7 +260,6 @@ void listarProdutosPorQtdMinStock(node test, nodeM movimentos)
             printf("Codigo: %d             \n", link->data.codigo);
             printf("Designacao: %s         \n", link->data.designacao);
             printf("*========================*\n");
-            //printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
         }
         link = link->next;
     }
@@ -255,8 +268,6 @@ void listarProdutosPorQtdMinStock(node test, nodeM movimentos)
 
 node procurarNode(node test, char des[100])
 {
-    //char oremos[100];
-    //char senhor[100];
 
     node list = test;
 
@@ -275,31 +286,31 @@ node procurarNode(node test, char des[100])
 
 node createNode()
 {
-    node temp;                                        // declare a node
-    temp = (node)malloc(sizeof(struct NodeProdutos)); // allocate memory using malloc()
-    temp->next = NULL;                                // make next point to NULL
-    return temp;                                      // return the new node
+    node temp;                                        
+    temp = (node)malloc(sizeof(struct NodeProdutos)); 
+    temp->next = NULL;                                
+    return temp;                                      
 }
 
 node addNode(node head, produto value)
 {
-    node temp, p;        // declare two nodes temp and p
-    temp = createNode(); // createNode will return a new node with data = value and next pointing to NULL.
-    temp->data = value;  // add element's value to data part of node
+    node temp, p;        
+    temp = createNode(); 
+    temp->data = value; 
     temp->next = NULL;
 
     if (head == NULL)
     {
-        head = temp; // when linked list is empty
+        head = temp; 
     }
     else
     {
-        p = head; // assign head to p
+        p = head; 
         while (p->next != NULL)
         {
-            p = p->next; // traverse the list until p is the last node.The last node always points to NULL.
+            p = p->next; 
         }
-        p->next = temp; // Point the previous last node to the new node created.
+        p->next = temp; 
     }
     return head;
 }
@@ -339,14 +350,13 @@ void listarProdutosPorFornecedor(node test, nodeM movimentos)
         if (!strcmp(link->data.fornecedor, nome))
         {
             ++counter;
+            printf("\n");
             printf("*========================*\n");
             printf("Codigo: %d             \n", link->data.codigo);
             printf("Designacao: %s         \n", link->data.designacao);
             printf("*========================*\n");
-            // printf("\n-------\n-> %d\n-> %s\n-------\n", link->data.codigo, link->data.designacao);
         }
         link = link->next;
     }
-    // printf("\n%d", counter);
     menuPrincipal(test, movimentos);
 }
