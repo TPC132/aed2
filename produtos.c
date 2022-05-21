@@ -57,14 +57,25 @@ void inserirProduto(node test, nodeM movimentos)
     Produto.quantidadeStock = quantidadeStock;
     Produto.codigo = obterCodigo(test, movimentos);
 
-    node link = addNode(test, Produto);
+    if (existeProduto(test, designacao))
+    {
+        printf("\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("-> Ja existe um produto com a designacao: %s\n", designacao);
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        menuProduto(test, movimentos);
+    }
+    else
+    {
+        node link = addNode(test, Produto);
 
-    printf("\n");
-    printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
-    printf("$$            Produto inserido com sucesso!           $$\n");
-    printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
+        printf("$$            Produto inserido com sucesso!           $$\n");
+        printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 
-    menuPrincipal(link, movimentos);
+        menuProduto(link, movimentos);
+    }
 }
 
 void listarProdutos(node test, nodeM movimentos)

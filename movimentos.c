@@ -62,7 +62,7 @@ void registarMovimento(node test, nodeM movimentos)
 
         fflush(stdout);
         printf("\nInsira a quantidade:\n");
-        printf("-> \n");
+        printf("-> ");
         fflush(stdout);
         scanf("%d", &quantidade);
         mov.quantidade = quantidade;
@@ -254,29 +254,35 @@ void consultarMovimentosDeProduto(node test, nodeM movimentos)
             {
                 int **data;
                 data = aux->data.data;
-                if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf && !strcmp(aux->data.produto, produto))
+                if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
                 {
-                    printf("\n");
-                    printf("*=========================*\n");
-                    printf("Designacao: %s             \n", aux->data.produto);
-                    printf("Quantidade: %d             \n", aux->data.quantidade);
-                    printf("Data: %d-%d-%d", aux->data.data[0][0], aux->data.data[0][1], aux->data.data[0][2]);
-                    printf(" %d:%d:%d    \n", aux->data.data[1][0], aux->data.data[1][1], aux->data.data[1][2]);
-                    if (aux->data.entrada == true)
+                    printf("1\n");
+                    if (!strcmp(aux->data.produto, produto))
                     {
-                        printf("Tipo de movimento: Entrada\n");
-                    }
-                    else
-                    {
-                        printf("Tipo de movimento: Saida\n");
-                    }
+                        printf("2\n");
+                        printf("\n");
+                        printf("*=========================*\n");
+                        printf("Designacao: %s             \n", aux->data.produto);
+                        printf("Quantidade: %d             \n", aux->data.quantidade);
+                        printf("Data: %d-%d-%d", aux->data.data[0][0], aux->data.data[0][1], aux->data.data[0][2]);
+                        printf(" %d:%d:%d    \n", aux->data.data[1][0], aux->data.data[1][1], aux->data.data[1][2]);
+                        if (aux->data.entrada == true)
+                        {
+                            printf("Tipo de movimento: Entrada\n");
+                        }
+                        else
+                        {
+                            printf("Tipo de movimento: Saida\n");
+                        }
 
-                    printf("*=========================*\n");
+                        printf("*=========================*\n");
+                    }
                     aux = aux->next;
                 }
             }
 
             voltar(test, movimentos);
+
         }
     }
 }
