@@ -185,9 +185,9 @@ void consultarMovimentos(node test, nodeM movimentos)
                 printf(" %d:%d:%d    \n", movimentos->data.data[1][0], movimentos->data.data[1][1], movimentos->data.data[1][2]);
                 if (movimentos->data.entrada == true)
                 {
-                    printf("Tipo de vovimento: Entrada\n");
+                    printf("Tipo de movimento: Entrada\n");
                 }else{
-                    printf("Tipo de vovimento: Saida\n");
+                    printf("Tipo de movimento: Saida\n");
                 }
                 
                 printf("*=========================*\n");
