@@ -263,7 +263,7 @@ void listarProdutosPorQtdMinStock(node test, nodeM movimentos)
         }
         link = link->next;
     }
-    menuPrincipal(test, movimentos);
+    menuProduto(test, movimentos);
 }
 
 node procurarNode(node test, char des[100])
@@ -345,18 +345,28 @@ void listarProdutosPorFornecedor(node test, nodeM movimentos)
     fflush(stdout);
     scanf("%s", nome);
 
-    while (link != NULL)
+    if (!existeProduto(test, nome))
     {
-        if (!strcmp(link->data.fornecedor, nome))
-        {
-            ++counter;
-            printf("\n");
-            printf("*========================*\n");
-            printf("Codigo: %d             \n", link->data.codigo);
-            printf("Designacao: %s         \n", link->data.designacao);
-            printf("*========================*\n");
-        }
-        link = link->next;
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("-> Nao foram encontrados produtos com a designacao: %s\n", nome);
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        menuProduto(test, movimentos);
     }
-    menuPrincipal(test, movimentos);
+    else
+    {
+        while (link != NULL)
+        {
+            if (!strcmp(link->data.fornecedor, nome))
+            {
+                ++counter;
+                printf("\n");
+                printf("*========================*\n");
+                printf("Codigo: %d             \n", link->data.codigo);
+                printf("Designacao: %s         \n", link->data.designacao);
+                printf("*========================*\n");
+            }
+            link = link->next;
+        }
+        menuProduto(test, movimentos);
+    }
 }
