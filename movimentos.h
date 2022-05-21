@@ -12,5 +12,6 @@ int verificarStock(node test, char produto[]);
 int verificarQtdMinima(node test, char produto[]);
 int adicionarStock(node test, char produto[], int num);
 int removerStock(node test, char produto[], int num);
+void consultarMovimentosDeProduto(node test, nodeM movimentos);
 
 #endif

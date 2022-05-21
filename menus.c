@@ -239,11 +239,12 @@ void menuMovimentos(node test, nodeM movimentos)
     int choice;
 
     printf("\n");
-    printf("*==========================*\n");
-    printf("| 1 - Registar Movimento   |\n");
-    printf("| 2 - Consultar Movimentos |\n");
-    printf("| 3 - Voltar               |\n");
-    printf("*==========================*\n");
+    printf("*========================================*\n");
+    printf("| 1 - Registar Movimento                 |\n");
+    printf("| 2 - Consultar Todos os Movimentos      |\n");
+    printf("| 3 - Consultar Movimentos de um Produto |\n");
+    printf("| 4 - Voltar                             |\n");
+    printf("*========================================*\n");
     fflush(stdin);
     printf("\n-> ");
 
@@ -258,6 +259,9 @@ void menuMovimentos(node test, nodeM movimentos)
         consultarMovimentos(test, movimentos);
         break;
     case 3:
+        consultarMovimentosDeProduto(test, movimentos);
+        break;
+    case 4:
         menuPrincipal(test, movimentos);
         break;
     default:

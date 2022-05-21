@@ -201,6 +201,86 @@ void consultarMovimentos(node test, nodeM movimentos)
     }
 }
 
+void consultarMovimentosDeProduto(node test, nodeM movimentos)
+{
+    char produto[50];
+    int di, mi, yi, df, mf, yf;
+
+    fflush(stdout);
+    printf("\n");
+    printf("Indique o produto cuh«jos movimentos pretende consultar:\n");
+    printf("-> ");
+    fflush(stdout);
+    scanf("%s", produto);
+    fflush(stdout);
+    if (!existeProduto(test, produto))
+    {
+        printf("\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        printf("!!         O produto que selecionou não existe!       !!\n");
+        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        menuMovimentos(test, movimentos);
+    }else{
+
+        printf("\nDefina um periodo de tempo:\n");
+        printf("--- Inicio ---\n");
+        printf("Dia : ");
+        scanf("%d", &di);
+        printf("Mes : ");
+        scanf("%d", &mi);
+        printf("Ano : ");
+        scanf("%d", &yi);
+        printf("\n--- Fim ---\n");
+        printf("Dia : ");
+        scanf("%d", &df);
+        printf("Mes : ");
+        scanf("%d", &mf);
+        printf("Ano : ");
+        scanf("%d", &yf);
+
+        if (movimentos == NULL)
+        {
+            printf("\n");
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+            printf("!!          Nao foram registados movimentos!          !!\n");
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+            voltar(test, movimentos);
+        }
+        else
+        {
+            nodeM aux;
+            aux = movimentos;
+            while (aux != NULL)
+            {
+                int **data;
+                data = aux->data.data;
+                if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf && !strcmp(aux->data.produto, produto))
+                {
+                    printf("\n");
+                    printf("*=========================*\n");
+                    printf("Designacao: %s             \n", aux->data.produto);
+                    printf("Quantidade: %d             \n", aux->data.quantidade);
+                    printf("Data: %d-%d-%d", aux->data.data[0][0], aux->data.data[0][1], aux->data.data[0][2]);
+                    printf(" %d:%d:%d    \n", aux->data.data[1][0], aux->data.data[1][1], aux->data.data[1][2]);
+                    if (aux->data.entrada == true)
+                    {
+                        printf("Tipo de movimento: Entrada\n");
+                    }
+                    else
+                    {
+                        printf("Tipo de movimento: Saida\n");
+                    }
+
+                    printf("*=========================*\n");
+                    aux = aux->next;
+                }
+            }
+
+            voltar(test, movimentos);
+        }
+    }
+}
+
 
 int **obterData()
 {
