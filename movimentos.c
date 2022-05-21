@@ -183,6 +183,13 @@ void consultarMovimentos(node test, nodeM movimentos)
                 printf("Quantidade: %d             \n", movimentos->data.quantidade);
                 printf("Data: %d-%d-%d", movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
                 printf(" %d:%d:%d    \n", movimentos->data.data[1][0], movimentos->data.data[1][1], movimentos->data.data[1][2]);
+                if (movimentos->data.entrada == true)
+                {
+                    printf("Tipo de vovimento: Entrada\n");
+                }else{
+                    printf("Tipo de vovimento: Saida\n");
+                }
+                
                 printf("*=========================*\n");
                 movimentos = movimentos->next;
             }
