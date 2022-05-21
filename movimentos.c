@@ -171,19 +171,21 @@ void consultarMovimentos(node test, nodeM movimentos)
     }
     else
     {
-        while (movimentos != NULL)
+        nodeM aux;
+        aux = movimentos;
+        while (aux != NULL)
         {
             int **data;
-            data = movimentos->data.data;
+            data = aux->data.data;
             if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
             {
                 printf("\n");
                 printf("*=========================*\n");
-                printf("Designacao: %s             \n", movimentos->data.produto);
-                printf("Quantidade: %d             \n", movimentos->data.quantidade);
-                printf("Data: %d-%d-%d", movimentos->data.data[0][0], movimentos->data.data[0][1], movimentos->data.data[0][2]);
-                printf(" %d:%d:%d    \n", movimentos->data.data[1][0], movimentos->data.data[1][1], movimentos->data.data[1][2]);
-                if (movimentos->data.entrada == true)
+                printf("Designacao: %s             \n", aux->data.produto);
+                printf("Quantidade: %d             \n", aux->data.quantidade);
+                printf("Data: %d-%d-%d", aux->data.data[0][0], aux->data.data[0][1], aux->data.data[0][2]);
+                printf(" %d:%d:%d    \n", aux->data.data[1][0], aux->data.data[1][1], aux->data.data[1][2]);
+                if (aux->data.entrada == true)
                 {
                     printf("Tipo de movimento: Entrada\n");
                 }else{
@@ -191,7 +193,7 @@ void consultarMovimentos(node test, nodeM movimentos)
                 }
                 
                 printf("*=========================*\n");
-                movimentos = movimentos->next;
+                aux = aux->next;
             }
         }
 
