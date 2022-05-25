@@ -173,12 +173,18 @@ void consultarMovimentos(node test, nodeM movimentos)
     {
         nodeM aux;
         aux = movimentos;
+        int encontrou = 0;
         while (aux != NULL)
         {
             int **data;
             data = aux->data.data;
-            if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
+            // if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
+            int dIncio = (31540000 * yi) + (2628000 * mi) + (86400 * di);
+            int dFim = (31540000 * yf) + (2628000 * mf) + (86400 * df);
+            int dataProcurada = (31540000 * data[0][2]) + (2628000 * data[0][1]) + (86400 * data[0][0]);
+            if (dataProcurada >= dIncio && dataProcurada <= dFim)
             {
+                encontrou = 1;
                 printf("\n");
                 printf("*=========================*\n");
                 printf("Designacao: %s             \n", aux->data.produto);
@@ -193,8 +199,16 @@ void consultarMovimentos(node test, nodeM movimentos)
                 }
                 
                 printf("*=========================*\n");
-                aux = aux->next;
             }
+            aux = aux->next;
+        }
+        if (encontrou == 0)
+        {
+            printf("\n");
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+            printf("!!          Nao foram encontrados movimentos!          !!\n");
+            printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+            voltar(test, movimentos);
         }
 
         voltar(test, movimentos);
@@ -250,16 +264,19 @@ void consultarMovimentosDeProduto(node test, nodeM movimentos)
         {
             nodeM aux;
             aux = movimentos;
+            int encontrou = 0;
+            int dIncio = (31540000 * yi) + (2628000 * mi) + (86400 * di);
+            int dFim = (31540000 * yf) + (2628000 * mf) + (86400 * df);
             while (aux != NULL)
             {
                 int **data;
                 data = aux->data.data;
-                if (data[0][0] >= di && data[0][1] >= mi && data[0][2] >= yi && data[0][1] <= df && data[0][1] >= mf && data[0][2] >= yf)
+                int dataNode = (31540000 * data[0][2]) + (2628000 * data[0][1]) + (86400 * data[0][0]);
+                if (dataNode >= dIncio && dataNode <= dFim)
                 {
-                    printf("1\n");
                     if (!strcmp(aux->data.produto, produto))
                     {
-                        printf("2\n");
+                        encontrou = 1;
                         printf("\n");
                         printf("*=========================*\n");
                         printf("Designacao: %s             \n", aux->data.produto);
@@ -277,12 +294,19 @@ void consultarMovimentosDeProduto(node test, nodeM movimentos)
 
                         printf("*=========================*\n");
                     }
-                    aux = aux->next;
                 }
+                aux = aux->next;
+            }
+            if (encontrou == 0)
+            {
+                printf("\n");
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                printf("!!          Nao foram encontrados movimentos!          !!\n");
+                printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                voltar(test, movimentos);
             }
 
             voltar(test, movimentos);
-
         }
     }
 }
