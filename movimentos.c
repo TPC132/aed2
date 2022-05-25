@@ -222,7 +222,7 @@ void consultarMovimentosDeProduto(node test, nodeM movimentos)
 
     fflush(stdout);
     printf("\n");
-    printf("Indique o produto cuh«jos movimentos pretende consultar:\n");
+    printf("Indique o produto cujos movimentos pretende consultar:\n");
     printf("-> ");
     fflush(stdout);
     scanf("%s", produto);
