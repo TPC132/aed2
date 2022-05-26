@@ -356,15 +356,7 @@ void listarProdutosPorFornecedor(node test, nodeM movimentos)
     fflush(stdout);
     scanf("%s", nome);
 
-    if (!existeProduto(test, nome))
-    {
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        printf("-> Nao foram encontrados produtos com a designacao: %s\n", nome);
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        menuProduto(test, movimentos);
-    }
-    else
-    {
+
         while (link != NULL)
         {
             if (!strcmp(link->data.fornecedor, nome))
@@ -380,4 +372,3 @@ void listarProdutosPorFornecedor(node test, nodeM movimentos)
         }
         menuProduto(test, movimentos);
     }
-}
